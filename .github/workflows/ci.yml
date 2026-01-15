@@ -1,0 +1,52 @@
+# Copyright (c) 0x5BFA. All rights reserved.
+# Licensed under the MIT license.
+
+name: VTableFunctionGenerator CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/assets/**'
+      - 'docs/**'
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '.github/assets/**'
+      - 'docs/**'
+      - '*.md'
+
+run-name: ${{ github.event_name == 'pull_request' && 'VTableFunctionGenerator PR Validation' || 'VTableFunctionGenerator CI Validation' }}
+
+env:
+  WORKING_DIR:           '${{ github.workspace }}' # 'D:\a\VTableFunctionGenerator\VTableFunctionGenerator'
+  SOLUTION_PATH:         '${{ github.workspace }}\VTableFunctionGenerator.slnx'
+  WASDK_APP_PROJ_PATH:   '${{ github.workspace }}\samples\VTableFunctionGenerator.Wasdk.Sample.App\VTableFunctionGenerator.Wasdk.Sample.App.csproj'
+  UWP_APP_PROJ_PATH:     '${{ github.workspace }}\samples\VTableFunctionGenerator.Uwp.Sample.Packaging\VTableFunctionGenerator.Uwp.Sample.Packaging.wapproj'
+
+jobs:
+  build-wasdk:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+        platform: [x64, ARM64]
+    env:
+      CONFIGURATION: ${{ matrix.configuration }}
+      PLATFORM: ${{ matrix.platform }}
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v6
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: |
+          10.0.x
+

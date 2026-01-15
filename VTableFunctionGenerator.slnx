@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/.global/">
+    <File Path=".github/workflows/ci.yml" />
+  </Folder>
   <Project Path="VTableFunctionGenerator.SourceGenerators/VTableFunctionGenerator.SourceGenerators.csproj" />
+  <Project Path="VTableFunctionGenerator.Tests/VTableFunctionGenerator.Tests.csproj" Id="62499fe3-450f-41bb-8472-1fdb8caa0bb7" />
 </Solution>

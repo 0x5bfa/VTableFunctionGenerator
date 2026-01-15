@@ -17,7 +17,7 @@ internal class VTableFunctionGenerator : IIncrementalGenerator
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
 		var sources = context.SyntaxProvider.ForAttributeWithMetadataName(
-			"Files.Shared.Attributes.GeneratedVTableFunctionAttribute",
+			WellKnownNames.GeneratedVTableFunctionAttribute,
 			static (node, token) =>
 			{
 				token.ThrowIfCancellationRequested();
